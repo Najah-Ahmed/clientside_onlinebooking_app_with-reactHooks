@@ -1,0 +1,9 @@
+ const userProfile = () => {
+    axios
+      .get('/authuser', config)
+
+      .then((res) => res.data)
+      .catch((error) =>
+        console.log(`NO token ${error.response.status} please login  `)
+      );
+  };

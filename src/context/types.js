@@ -1,0 +1,23 @@
+export const GET_TICKETS = 'GET_TICKETS';
+export const GET_SINGLE_TICKET = 'GET_SINGLE_TICKET';
+export const ADD_TICKETS = 'ADD_TICKETS';
+export const DELETE_TICKETS = 'DELETE_TICKETS';
+export const UPDATE_TICKETS = 'UPDATE_TICKETS';
+export const SEARCH_TICKETS = 'SEARCH_TICKETS';
+export const BOOKING_TICKET = 'BOOKING_TICKET';
+export const TICKET_ERROR = 'TICKET_ERROR';
+export const BOOKING_TICKET_ERROR = 'BOOKING_TICKET_ERROR';
+export const CANCEL_TICKET = 'CANCEL_TICKET';
+
+export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
+export const REGISTER_FAIL = 'REGISTER_FAIL';
+export const USER_LOADED = 'USER_LOADED';
+export const AUTH_ERROR = 'AUTH_ERROR';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_FAIL = 'LOGIN_FAIL';
+export const LOGOUT = 'LOGOUT';
+export const CLEAR_ERROR = 'CLEAR_ERROR';
+export const USER_PROFILE = 'USER_PROFILE';
+
+export const REMOVE_ALERT = 'REMOVE_ALERT';
+export const SET_ALERT = 'SET_ALERT';
