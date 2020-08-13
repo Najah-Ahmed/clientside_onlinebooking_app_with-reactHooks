@@ -4,7 +4,7 @@ import AlertReducer from './alertReducer';
 import { v4 as uuid } from 'uuid';
 import { SET_ALERT, REMOVE_ALERT } from '../types';
 
-export const AlertState = ({ childern }) => {
+export const AlertState = (props) => {
   const initialState = [];
   const [state, dispatch] = useReducer(AlertReducer, initialState);
   const setAlert = (msg, type, timeOut = 5000) => {
@@ -24,7 +24,7 @@ export const AlertState = ({ childern }) => {
   };
   return (
     <AlertContext.Provider value={{ alerts: state, setAlert }}>
-      {childern}
+      {props.childern}
     </AlertContext.Provider>
   );
 };

@@ -77,7 +77,7 @@ const Footing = () => {
           <p className='text-sm text-gray-600 sm:ml-6 sm:mt-0 mt-4'>
             © 2020 Najah Said Ahmed —
             <a
-              href='https://twitter.com/knyttneve'
+              href='https://twitter.com/najaah4434'
               className='text-gray-500 ml-1'
               target='_blank'
               rel='noopener noreferrer'>

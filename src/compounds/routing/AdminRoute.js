@@ -2,24 +2,19 @@ import React, { useContext } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import authContext from '../../context/auth/authContext';
 
-const PrivateRoute = ({ component: Component, ...rest }) => {
+const AdminRoute = ({ component: Component, ...rest }) => {
   const authPrivate = useContext(authContext);
-  const { isAuthenticated, loading } = authPrivate;
-
+  const { isAdmin } = authPrivate;
   return (
     <div>
       <Route
         {...rest}
         render={(props) =>
-          !localStorage.token && !isAuthenticated && !loading ? (
-            <Redirect to='/login' />
-          ) : (
-            <Component {...props} />
-          )
+          !isAdmin ? <Redirect to='/' /> : <Component {...props} />
         }
       />
     </div>
   );
 };
 
-export default PrivateRoute;
+export default AdminRoute;

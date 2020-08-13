@@ -9,6 +9,7 @@ import {
   CANCEL_TICKET,
   TICKET_ERROR,
   GET_SINGLE_TICKET,
+  SEARCH_TICKET_ERROR,
 } from '../types';
 
 export default (state, action) => {
@@ -23,13 +24,14 @@ export default (state, action) => {
     case ADD_TICKETS:
       return {
         ...state,
-        tickets: [action.payload, ...state.tickets],
+        alert: [action.payload, ...state.tickets],
         loading: false,
       };
     case DELETE_TICKETS:
       return {
         ...state,
         tickets: state.tickets.filter((ticket) => ticket.id !== action.payload),
+
         loading: false,
       };
     case UPDATE_TICKETS:
@@ -45,10 +47,16 @@ export default (state, action) => {
         ...state,
         ticket: action.payload,
         loading: false,
+        seats: action.payload.bus_no_seat,
       };
     case BOOKING_TICKET:
       return { ...state, booking: action.payload, loading: false };
+    case SEARCH_TICKET_ERROR:
     case BOOKING_TICKET_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+      };
     case TICKET_ERROR:
       return {
         ...state,

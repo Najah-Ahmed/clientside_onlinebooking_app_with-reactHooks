@@ -1,22 +1,30 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from 'react';
+// import { Link } from 'react-router-dom';
+
+import bookingTicketsContext from '../../context/bookingTicket/bookingTicketsContext';
+
 const TicketForm = (props) => {
-  // useEffect(() => {
-  //   if (isAuthenticated) {
-  //     props.history.push('/booking'); //redircated to homepage
-  //   }
-  //   if (error === 'Not found') {
-  //     // setAlert(error, 'danger');
-  //     clearError();
-  //   }
-  //   //eslint-disable-next-line
-  // }, [error, isAuthenticated, props.history]);
+  const searchTBContext = useContext(bookingTicketsContext);
+  const { searchTicket, loading, error, tickets } = searchTBContext;
+  useEffect(() => {
+    if (error === 'Empty Data') {
+      // setAlert(error, 'danger');
+      console.log('error');
+    }
+
+    if (loading === false && tickets !== null) {
+      props.history.push('/searchticket'); //redircated to search result
+    } else {
+      props.history.push('/');
+    }
+
+    //eslint-disable-next-line
+  }, [loading, error, props.history]);
+
   const [ticket, setTicket] = useState({
     currentPlace: '',
     destination: '',
     date: '',
-    // manta: '',
-    // bari: '',
   });
   const { currentPlace, destination, date } = ticket;
   const onChange = (e) =>
@@ -30,14 +38,11 @@ const TicketForm = (props) => {
       // setAlert('Please Enter All Fields ', 'danger');
       console.log('empty field not allow');
     } else {
-      // register({
-      //   currentPlace,
-      //   destination,
-      //   Manta,
-      //   Bari,
-      //
-      // });
-      console.log(currentPlace, destination, date);
+      searchTicket({
+        currentPlace,
+        destination,
+        date,
+      });
     }
   };
   return (
@@ -46,7 +51,7 @@ const TicketForm = (props) => {
         <div className='container pr-56 sm:pl-3 m:pl-3 py-24 mx-auto'>
           <div className='flex flex-col text-center w-full mb-12'>
             <h1 className='sm:text-3xl text-2xl font-medium title-font mb-4 text-white'>
-              Search Bas for Your Next Journey
+              Search Bus for Your Next Journey
             </h1>
           </div>
           <form onSubmit={onSubmit}>

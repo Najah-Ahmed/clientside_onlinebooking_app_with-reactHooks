@@ -1,13 +1,23 @@
-import React, { useContext, Fragment } from 'react';
+import React, { useContext, Fragment, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+
 import '../../assets/im.svg';
 import authContext from '../../context/auth/authContext';
 const Navbar = () => {
   const Auth = useContext(authContext);
-  const { isAuthenticated, logout, user } = Auth;
+  const { token, logout, user, isAdmin, loadUser } = Auth;
+
+  useEffect(() => {
+    if (token) {
+      loadUser();
+    }
+    // eslint-disable-next-line
+  }, []);
+
   const onLogout = () => {
     logout();
   };
+
   const authLink = (
     <Fragment>
       <Link to='/about' className='mr-5 hover:text-white'>
@@ -19,11 +29,15 @@ const Navbar = () => {
       <Link to='/user' className='list-none mr-5 hover:text-white'>
         Hello {user && user.userName}
       </Link>
-      <Link to='/admin' className='list-none mr-5 hover:text-white'></Link>
+      {isAdmin === true ? (
+        <Link to='/admin' className='list-none mr-5 hover:text-white'>
+          Admin
+        </Link>
+      ) : null}
       <li className='list-none mr-5 hover:text-white'>
         <a
           onClick={onLogout}
-          href='#!'
+          href='#!Logout'
           className='inline-flex items-center bg-gray-800 border-0 py-1 px-3 focus:outline-none hover:bg-gray-700 rounded text-base mt-4 md:mt-0'>
           Logout
         </a>
@@ -122,7 +136,7 @@ const Navbar = () => {
           <span className='ml-3 text-xl'>Bari&&Galbeed</span>
         </Link>
         <nav className='md:ml-auto flex flex-wrap items-center text-base justify-center'>
-          {isAuthenticated ? authLink : guessLink}
+          {token !== null ? authLink : guessLink}
         </nav>
       </div>
     </header>

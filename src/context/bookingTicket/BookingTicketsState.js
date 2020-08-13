@@ -13,6 +13,7 @@ import {
   TICKET_ERROR,
   CANCEL_TICKET,
   BOOKING_TICKET_ERROR,
+  SEARCH_TICKET_ERROR,
 } from '../types';
 const Authtoken = localStorage.getItem('token');
 const config = {
@@ -27,6 +28,8 @@ const initialState = {
   ticket: {},
   loading: true,
   error: null,
+  alert: {},
+  seat: null,
 };
 export const BookingTicketsState = ({ children }) => {
   const [state, dispatch] = useReducer(bookingTicketsReducer, initialState);
@@ -47,10 +50,10 @@ export const BookingTicketsState = ({ children }) => {
   };
   const createTickets = async (formDate) => {
     try {
-      const res = await axios.post('/tickets');
+      const res = await axios.post('/tickets', formDate, config);
       dispatch({
         type: ADD_TICKETS,
-        payload: res.data.tickets,
+        payload: res.data.message,
       });
     } catch (err) {
       dispatch({
@@ -60,12 +63,12 @@ export const BookingTicketsState = ({ children }) => {
     }
   };
   //single ticket
-  const getSingleTicket = async (id) => {
+  const getSingleTicket = async (url) => {
     try {
-      const res = await axios.get(`/ticket/${id}`, config);
+      const res = await axios.get(`${url}`, config);
       dispatch({
         type: GET_SINGLE_TICKET,
-        payload: res.data.message,
+        payload: res.data.result,
       });
     } catch (err) {
       dispatch({
@@ -98,24 +101,24 @@ export const BookingTicketsState = ({ children }) => {
     } catch (err) {
       dispatch({
         type: BOOKING_TICKET_ERROR,
-        payload: err.response.status,
+        payload: err.response.data,
       });
     }
   };
 
-  const searchTicket = async (from, to, date) => {
+  const searchTicket = async (data) => {
     try {
       const res = await axios.get(
-        `/bookings/?arrived=${from}&destination=${to}&date=${date}`
+        `/bookings/?arrived=${data.currentPlace}&destination=${data.destination}&date=${data.date}`
       );
       dispatch({
         type: SEARCH_TICKETS,
-        payload: res.data,
+        payload: res.data.data,
       });
     } catch (err) {
       dispatch({
-        type: BOOKING_TICKET_ERROR,
-        payload: err.response.status,
+        type: SEARCH_TICKET_ERROR,
+        payload: err.response,
       });
     }
   };
@@ -151,6 +154,7 @@ export const BookingTicketsState = ({ children }) => {
     <bookingTicketsContext.Provider
       value={{
         tickets: state.tickets,
+        seats: state.seats,
         ticket: state.ticket,
         booking: state.booking,
         loading: state.loading,

@@ -21,6 +21,7 @@ const initialState = {
   loading: true,
   error: null,
   isAdmin: false,
+  alert: {},
 };
 
 export const AuthState = ({ children }) => {

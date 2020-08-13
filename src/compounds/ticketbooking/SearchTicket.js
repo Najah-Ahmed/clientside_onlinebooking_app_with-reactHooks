@@ -1,22 +1,22 @@
 import React, { useContext, useEffect } from 'react';
 import bookingTicketsContext from '../../context/bookingTicket/bookingTicketsContext';
 import TicketsList from './TicketsList';
-import authContext from '../../context/auth/authContext';
-const Tickets = () => {
+const SearchTicket = (props) => {
   const bTContext = useContext(bookingTicketsContext);
-  const AuthContext = useContext(authContext);
-  const { getTickets, tickets } = bTContext;
-  const { loadUser } = AuthContext;
+  const { searchTicket, tickets, loading, error } = bTContext;
   useEffect(() => {
-    getTickets();
-    loadUser();
+    if (loading === true && error === null) {
+      props.history.push('/');
+    } else {
+      searchTicket();
+    }
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    // eslint-disable-next-line
+  }, [loading, error]);
 
   return (
     <div className=''>
-      <h1 className='text-white  text-4xl pl-40'>Available Tickets</h1>
+      <h1 className='text-white  text-4xl'>Available Tickets</h1>
       {tickets.map((ticket) => (
         <TicketsList key={ticket.id} booking={ticket} />
       ))}
@@ -25,4 +25,4 @@ const Tickets = () => {
   );
 };
 
-export default Tickets;
+export default SearchTicket;
